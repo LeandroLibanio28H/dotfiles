@@ -1,0 +1,71 @@
+# ------------------------------------------------------------------------------
+# 1. System, Application Runtimes & Browser Profiles
+# ------------------------------------------------------------------------------
+BraveSoftware/
+Salinha/
+libreoffice/
+remmina/
+freerdp/
+pulse/
+dconf/
+uv/
+autostart/
+zed/
+google-chrome/
+chromium/
+firefox/
+git/
+Session\ Storage/
+Local\ Storage/
+
+# ------------------------------------------------------------------------------
+# 2. Ephemeral Files, Caches & Logs
+# ------------------------------------------------------------------------------
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Database journals and locks
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.pid
+*.sock
+*.lock
+
+# Cache directories
+**/Cache/
+**/Code\ Cache/
+**/GPUCache/
+**/Crashpad/
+**/DawnGraphiteCache/
+**/DawnWebGPUCache/
+
+# ------------------------------------------------------------------------------
+# 3. Security, Cookies & Private Tokens
+# ------------------------------------------------------------------------------
+*cookie*
+*Cookie*
+*token*
+*credential*
+*.pem
+*.key
+*.secret
+id_rsa
+id_ed25519
+
+# ------------------------------------------------------------------------------
+# 4. Neovim & Tool runtime data
+# ------------------------------------------------------------------------------
+nvim/lazy-lock.json.bak
+
+# ------------------------------------------------------------------------------
+# 5. Games
+# ------------------------------------------------------------------------------
+unity3d/

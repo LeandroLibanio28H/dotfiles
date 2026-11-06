@@ -1,0 +1,38 @@
+# ==============================================================================
+# MAKO CONFIGURATION
+# ==============================================================================
+
+font=Inter 10
+anchor=top-right
+layer=overlay
+width=340
+height=130
+margin=12,12
+padding=12
+border-size=1
+border-radius=12
+
+background-color=#141822f0
+text-color=#f8fafc
+border-color=#262e3d
+progress-color=over #f59e0b
+
+icons=1
+max-icon-size=40
+icon-path=/usr/share/icons/Papirus-Dark
+
+default-timeout=4500
+ignore-timeout=0
+
+[urgency=low]
+border-color=#262e3d
+default-timeout=3000
+
+[urgency=normal]
+border-color=#f59e0b
+default-timeout=4500
+
+[urgency=high]
+border-color=#ff2a42
+text-color=#ffffff
+default-timeout=0

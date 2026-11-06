@@ -1,0 +1,282 @@
+# ==============================================================================
+# SWAY CONFIGURATION
+# Solus OS - Wayland Desktop Environment
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Environment & Variables
+# ------------------------------------------------------------------------------
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+set $term kitty
+set $menu wofi --show drun
+
+seat seat0 xcursor_theme breeze_cursors 24
+font pango:Inter SemiBold 9
+
+# ------------------------------------------------------------------------------
+# Appearance & Window Borders
+# ------------------------------------------------------------------------------
+gaps inner 8
+gaps outer 0
+
+smart_gaps off
+smart_borders off
+hide_edge_borders none
+
+default_border pixel 2
+default_floating_border pixel 2
+
+bindsym $mod+Shift+g gaps inner all set 8, gaps outer all set 0
+
+# Colors (Amber Gold & Dark Slate)
+# class                 border    bground   text      indicator child_border
+client.focused          #f59e0b   #12151b   #f8fafc   #ff2a42   #f59e0b
+client.focused_inactive #262e3d   #0c0d10   #94a3b8   #262e3d   #262e3d
+client.unfocused        #1a202c   #0c0d10   #64748b   #1a202c   #1a202c
+client.urgent           #ff2a42   #ff2a42   #ffffff   #ff2a42   #ff2a42
+client.placeholder      #0c0d10   #0c0d10   #f8fafc   #0c0d10   #0c0d10
+client.background       #0c0d10
+
+# ------------------------------------------------------------------------------
+# Displays & Workspaces
+# ------------------------------------------------------------------------------
+# Outputs positioning
+output HDMI-A-2 position 0 0
+output DP-1 mode 1920x1080@180Hz position 1920 0
+
+# Wallpapers
+output HDMI-A-2 bg ~/.config/sway/wallpaper_cheatsheet.png fill
+output DP-1 bg ~/.config/sway/wallpaper_primary.png fill
+
+# Workspace Monitor Assignments
+workspace 1 output DP-1
+workspace 2 output HDMI-A-2
+workspace 3 output DP-1
+workspace 4 output DP-1
+workspace 5 output DP-1
+workspace 6 output HDMI-A-2
+workspace 7 output HDMI-A-2
+workspace 8 output HDMI-A-2
+workspace 9 output DP-1
+workspace 10 output HDMI-A-2
+
+workspace 1 gaps inner 8
+workspace 1 gaps outer 0
+workspace 2 gaps inner 8
+workspace 2 gaps outer 0
+workspace 3 gaps inner 8
+workspace 3 gaps outer 0
+workspace 4 gaps inner 8
+workspace 4 gaps outer 0
+workspace 5 gaps inner 8
+workspace 5 gaps outer 0
+
+# ------------------------------------------------------------------------------
+# Autostart & Daemons
+# ------------------------------------------------------------------------------
+exec_always swaymsg "gaps inner all set 8, gaps outer all set 0, workspace 1, move workspace to output DP-1, workspace 2, move workspace to output HDMI-A-2, workspace 1"
+
+exec mako
+
+exec swayidle -w \
+    timeout 300 'swaylock -f -c 0c0d10' \
+    timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+    before-sleep 'swaylock -f -c 0c0d10'
+
+# Status bar
+bar {
+    swaybar_command waybar
+}
+
+# ------------------------------------------------------------------------------
+# Input Devices
+# ------------------------------------------------------------------------------
+input type:keyboard {
+    xkb_layout "us"
+    xkb_variant "intl"
+}
+
+input type:touchpad {
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
+
+# ------------------------------------------------------------------------------
+# Keybindings - System & Applications
+# ------------------------------------------------------------------------------
+# Core Applications
+bindsym $mod+Return exec $term
+bindsym $mod+d exec $menu
+bindsym $mod+q kill
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit Sway session?' -B 'Yes, exit sway' 'swaymsg exit'
+
+# Quick Tools
+bindsym $mod+Shift+Return exec $term -e btop
+bindsym $mod+Shift+f exec $term -e ranger
+bindsym $mod+Shift+v exec pavucontrol
+
+# Floating, Fullscreen & Scratchpad
+floating_modifier $mod normal
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# Navigation & Focus (Vim keys & Arrows)
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Multi-Monitor Navigation
+bindsym $mod+o focus output right
+bindsym $mod+Shift+o focus output left
+bindsym $mod+Control+Left move workspace to output left
+bindsym $mod+Control+Right move workspace to output right
+bindsym $mod+Control+$left move workspace to output left
+bindsym $mod+Control+$right move workspace to output right
+bindsym $mod+Shift+greater move container to output right
+bindsym $mod+Shift+less move container to output left
+
+# Workspaces
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# Layouts
+bindsym $mod+b splith
+bindsym $mod+v splitv
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+a focus parent
+
+# Resize Mode
+mode "resize" {
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# ------------------------------------------------------------------------------
+# Media & Audio Controls (WirePlumber / playerctl)
+# ------------------------------------------------------------------------------
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioPause exec playerctl play-pause
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPrev exec playerctl previous
+bindsym --locked XF86AudioStop exec playerctl stop
+
+# ------------------------------------------------------------------------------
+# Screenshots (grim, slurp, wl-copy)
+# ------------------------------------------------------------------------------
+# Fullscreen to ~/Pictures/Screenshots
+bindsym Print exec mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png
+
+# Active window to ~/Pictures/Screenshots/windows
+bindsym Mod1+Print exec mkdir -p ~/Pictures/Screenshots/windows && grim -g "$(swaymsg -t get_tree | jq -r '.. | select(.focused? == true).rect | "\(.x),\(.y) \(.width)x\(.height)"')" ~/Pictures/Screenshots/windows/$(date +'%Y-%m-%d_%H-%M-%S').png
+
+# Area selection to ~/Pictures/Screenshots
+bindsym Shift+Print exec mkdir -p ~/Pictures/Screenshots && slurp | grim -g - ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png
+
+# Area selection copied to clipboard
+bindsym $mod+Shift+s exec slurp | grim -g - - | wl-copy
+
+# ------------------------------------------------------------------------------
+# Window Rules
+# ------------------------------------------------------------------------------
+# Steam Windows
+for_window [class="(?i)^Steam$" title="(?i)^Friends List$"] floating enable
+for_window [class="(?i)^Steam$" title="(?i).* - Chat"] floating enable
+for_window [class="(?i)^Steam$" title="(?i)^Steam Settings$"] floating enable
+for_window [class="(?i)^Steam$" title="(?i).* - Properties$"] floating enable
+for_window [class="(?i)^Steam$" title="(?i)^Screenshot Uploader$"] floating enable
+for_window [class="(?i)^Steam$" title="(?i)^Steam - News$"] floating enable
+for_window [class="(?i)^Steam$" title="(?i)^Steam Guard - Computer Authorization$"] floating enable
+for_window [class="(?i)^Steam$" title="(?i)^Steam - Self Updater$"] floating enable
+for_window [class="(?i)^Steam$" title="(?i)^Special Offers$"] floating enable
+
+# Games & Gamescope
+for_window [class="^steam_app_.*"] inhibit_idle fullscreen
+for_window [class="gamescope"] fullscreen enable, inhibit_idle focus
+
+# Game Development Engines (Godot)
+for_window [app_id="godot" title=".*Editor Settings.*"] floating enable
+for_window [app_id="godot" title=".*Project Settings.*"] floating enable
+for_window [app_id="org.godotengine.Godot" title=".*Editor Settings.*"] floating enable
+for_window [app_id="org.godotengine.Godot" title=".*Project Settings.*"] floating enable
+for_window [title=".*\(DEBUG\)"] floating enable
+
+# System Dialogs & Utilities
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="dialog"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [app_id="pavucontrol"] floating enable, move position center, resize set 720 480
+for_window [app_id="file-roller"] floating enable
+for_window [app_id="mpv"] floating enable, inhibit_idle visible
+for_window [class="(?i)nsxiv"] floating enable
+
+# Include Solus system configs if present
+include /usr/share/defaults/sway/config.d/*
+include /etc/sway/config.d/*
