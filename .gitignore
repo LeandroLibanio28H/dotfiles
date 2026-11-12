@@ -17,6 +17,7 @@ firefox/
 git/
 Session\ Storage/
 Local\ Storage/
+obs-studio/
 
 # ------------------------------------------------------------------------------
 # 2. Ephemeral Files, Caches & Logs
@@ -59,6 +60,7 @@ Thumbs.db
 *.secret
 id_rsa
 id_ed25519
+QtProject.conf
 
 # ------------------------------------------------------------------------------
 # 4. Neovim & Tool runtime data

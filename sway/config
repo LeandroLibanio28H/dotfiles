@@ -48,8 +48,8 @@ client.background       #0c0d10
 # Displays & Workspaces
 # ------------------------------------------------------------------------------
 # Outputs positioning
-output HDMI-A-2 position 0 0
-output DP-1 mode 1920x1080@180Hz position 1920 0
+output HDMI-A-2 position 1920 0
+output DP-1 position 0 0 mode 1920x1080@180Hz
 
 # Wallpapers
 output HDMI-A-2 bg ~/.config/sway/wallpaper_cheatsheet.png fill
